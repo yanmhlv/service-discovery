@@ -6,6 +6,10 @@ func ExampleGRPCCheck() {
 	svc := NewService("greeter", "localhost", 1234, "hello", "world")
 	svc.SetCheck(&GRPCheck{"localhost:1234", time.Second, time.Second})
 
+	// or
+	svc = NewService("greeter", "localhost", 1234, "hello", "world").
+		SetCheck(&GRPCheck{"localhost:1234", time.Second, time.Second})
+
 	consul := Must(New("localhost:8500"))
 	consul.Register(svc)
 	defer consul.Deregister()
